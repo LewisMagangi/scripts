@@ -1,0 +1,11 @@
+#!/bin/bash
+
+USERNAME="Liquelaliqour"
+
+# Get the list of repositories for the user
+REPOS=$(curl -s "https://api.github.com/users/$USERNAME/repos" | grep -o 'clone_url": "https://[^"]*' | sed 's/clone_url": "//')
+
+# Loop through the list and clone each repository
+for REPO_URL in $REPOS; do
+    git clone "$REPO_URL"
+    done

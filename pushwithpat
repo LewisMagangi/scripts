@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Set your GitHub username and PAT (Personal Access Token)
+GITHUB_USERNAME=Liquelaliqour
+PAT=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
+
+# Stage all changes
+git add .
+
+# Prompt for a commit message
+echo 'Enter the commit message:'
+read commitMessage
+
+# Commit the changes
+git commit -m "$commitMessage"
+
+# Push to GitHub using the PAT for authentication
+git push "https://$GITHUB_USERNAME:$PAT@github.com/$GITHUB_USERNAME/yourrepo.git"
