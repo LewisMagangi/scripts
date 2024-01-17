@@ -1,7 +1,13 @@
 #!/bin/bash
 
 USERNAME="Liquelaliqour"
-NEW_PAT="Peronal Access Token"  # Replace with your new Personal Access Token
+NEW_PAT="PersonalAccessToken"  # Replace with your new Personal Access Token
+
+# Check if the script is running as root
+if [ "$(id -u)" != "0" ]; then
+    echo "WARNING: This script should only be run in a secure environment, such as a root environment, to ensure that the Personal Access Token (PAT) is not accessible to unauthorized individuals."
+    exit 1
+fi
 
 # Get the list of repositories for the user
 REPOS=$(curl -s -H "Authorization: token $NEW_PAT" "https://api.github.com/users/$USERNAME/repos" | grep -o 'clone_url": "https://[^"]*' | sed 's/clone_url": "//')
