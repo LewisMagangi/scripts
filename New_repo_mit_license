@@ -6,7 +6,7 @@ if [ "$#" -eq 0 ]; then
     exit 1
 fi
 
-# Set your GitHub username
+# Setting my GitHub username
 github_username="Liquelaliqour"
 
 # Extract the repository name from the command line argument
@@ -25,18 +25,18 @@ git add .
 git commit -m "Initial commit"
 
 # Add MIT License
-echo "MIT License Text" > MIT-LICENSE-TEMP
-git add MIT-LICENSE-TEMP
+MIT_Template="scripts/MIT-LICENSE-TEMP"
+cp "$MIT-Template" LICENSE
+git add LICENSE
 git commit -m "Adding an MIT License"
 
 # Add README based on template
-readme_template="Readme_temp.md"
+readme_template="scripts/Readme_temp.md"
 cp "$readme_template" README.md
 sed -i "s/Project Name/$repo_name/g" README.md
 git add README.md
-git commit -m "Adding README template"
+git commit -m "Adding a README template"
 
-# Uncomment the following lines to create and push README and License separately
 # Push the code to the master branch of the remote repository
 git remote add origin "$repo_url"
 git push -u origin master
