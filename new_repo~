@@ -1,0 +1,37 @@
+#!/bin/bash
+
+# Check if the repository name is provided as an argument
+if [ "$#" -eq 0 ]; then
+    echo "Usage: $0 <repo_name>"
+    exit 1
+fi
+
+# Set your GitHub username
+github_username="Liquelaliqour"
+
+# Extract the repository name from the command line argument
+repo_name="$1"
+
+# Define the repository URL
+repo_url="https://github.com/$github_username/$repo_name.git"
+
+# Initialize a new Git repository
+git init
+
+# Add files to the repository (replace with your file paths)
+git add .
+
+# Commit the changes
+git commit -m "Initial commit"
+
+# Create a new repository on GitHub (you can also use other Git hosting services)
+# Replace 'your-username' and 'your-repo' with your GitHub username and repository name
+# You can automate this process using GitHub API or create the repository manually
+
+# Set the remote origin to the repository URL
+git remote add origin "$repo_url"
+
+# Push the code to the master branch of the remote repository
+git push -u origin master
+
+echo "Repository initialized and code pushed to $repo_url"

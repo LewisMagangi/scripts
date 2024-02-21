@@ -1,0 +1,44 @@
+#!/bin/bash
+
+# Check if the repository name is provided as an argument
+if [ "$#" -eq 0 ]; then
+    echo "Usage: $0 <repo_name>"
+    exit 1
+fi
+
+# Setting my GitHub username
+github_username="Liquelaliqour"
+
+# Extract the repository name from the command line argument
+repo_name="$1"
+
+# Define the repository URL
+repo_url="https://github.com/$github_username/$repo_name.git"
+
+# Initialize a new Git repository
+git init
+
+# Add files to the repository (replace with your file paths)
+git add .
+
+# Commit the initial changes
+git commit -m "Initial commit"
+
+# Add MIT License
+MIT_Template="scripts/MIT-LICENSE-TEMP"
+cp "$MIT-Template" LICENSE
+git add LICENSE
+git commit -m "Adding an MIT License"
+
+# Add README based on template
+readme_template="scripts/Readme_temp.md"
+cp "$readme_template" README.md
+sed -i "s/Project Name/$repo_name/g" README.md
+git add README.md
+git commit -m "Adding a README template"
+
+# Push the code to the master branch of the remote repository
+git remote add origin "$repo_url"
+git push -u origin master
+
+echo "Repository initialized, MIT License and README added. Remember to push changes to $repo_url"
