@@ -31,7 +31,7 @@ git add .
 git commit -m "Add all files"
 
 # Add the remote repository as the origin
-git remote add origin "https://github.com/Liquelaliqours/$1.git"
+git remote add origin "https://github.com/Liquelaliqour/$1.git"
 
 # Push the changes to the master branch of the remote repository
 git push -u origin master
