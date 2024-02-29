@@ -1,0 +1,32 @@
+#!/bin/bash
+
+USERNAME="Liquelaliqour"
+NEW_PAT="PersonalAccessToken"  # Replace with your new Personal Access Token
+
+# Check if the script is running as root
+if [ "$(id -u)" != "0" ]; then
+    echo "WARNING: This script should only be run in a secure environment, such as a root environment, to ensure that the Personal Access Token (PAT) is not accessible to unauthorized individuals."
+    exit 1
+fi
+
+# Function to retrieve repositories for a given page
+get_repositories_page() {
+    local page="$1"
+    curl -s -H "Authorization: token $NEW_PAT" "https://api.github.com/users/$USERNAME/repos?page=$page&per_page=100" 
+}
+
+# Get the list of repositories for the user
+page=1
+while true; do
+    REPOS=$(get_repositories_page $page | grep -o 'clone_url": "https://[^"]*' | sed 's/clone_url": "//')
+    if [ -z "$REPOS" ]; then
+        break
+    fi
+    # Loop through the list and clone each repository
+    for REPO_URL in $REPOS; do
+        # Clone the repository with the new PAT included in the URL
+        git clone "https://$NEW_PAT@github.com/$USERNAME/$(basename $REPO_URL)"
+    done
+    # Move to the next page
+    ((page++))
+done
