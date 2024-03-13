@@ -2,7 +2,7 @@
 
 # Check if any arguments are provided
 if [ "$#" -eq 0 ]; then
-    git add .
+    git add -A .
 else
     for file in "$@"; do
 	git add "$file"
