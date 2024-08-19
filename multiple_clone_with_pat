@@ -1,7 +1,30 @@
 #!/bin/bash
 
-USERNAME="Liquelaliqour"
-NEW_PAT="PersonalAccessToken"  # Replace with your new Personal Access Token
+USERNAME="LewisMagangi"
+NEW_PAT="Personal Access Token"  # Replace with your new Personal Access Token
+
+# Repositories to exclude from cloning
+EXCLUDE_REPOS=(
+    "cs-video-courses" 
+    "Summer2025-Internships" 
+    "tech-jobs-with-relocation" 
+    "Dynamic_Cryptosuite" 
+    "skills-code-with-codespaces" 
+    "Hash" 
+    "escrow" 
+    "data-leaks" 
+    "ssh" 
+    "Networks" 
+    "Datacamp-Python-Programmer" 
+    "micropilot-entry-challenge" 
+    "ML-For-Beginners" 
+    "AI-For-Beginners" 
+    "the-book-of-secret-knowledge" 
+    "The-Complete-FAANG-Preparation" 
+    "Projects" 
+    "mltype" 
+    "interview"
+)
 
 # Check if the script is running as root
 if [ "$(id -u)" != "0" ]; then
@@ -14,6 +37,15 @@ REPOS=$(curl -s -H "Authorization: token $NEW_PAT" "https://api.github.com/users
 
 # Loop through the list and clone each repository
 for REPO_URL in $REPOS; do
+    REPO_NAME=$(basename "$REPO_URL" .git)
+    
+    # Check if the repository is in the exclude list
+    if [[ " ${EXCLUDE_REPOS[@]} " =~ " ${REPO_NAME} " ]]; then
+        echo "Skipping $REPO_NAME"
+        continue
+    fi
+
     # Clone the repository with the new PAT included in the URL
-    git clone "https://$NEW_PAT@github.com/$USERNAME/$(basename $REPO_URL)"
+    git clone "https://$NEW_PAT@github.com/$USERNAME/$REPO_NAME.git"
 done
+
